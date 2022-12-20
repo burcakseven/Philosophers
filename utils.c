@@ -12,6 +12,8 @@ int ft_strlen(char *str)
 }
 int arg_control(int argc, char **argv)
 {
+    if (argc != 5)
+        exit(1);
     int i = 1;
     while (i < argc)
     {
@@ -21,7 +23,6 @@ int arg_control(int argc, char **argv)
         {
             if (!(48 <= argv[i][j] && argv[i][j] <= 57))
             {
-                printf("%s", argv[i]);
                 exit(1);
             }
             j++;
@@ -32,23 +33,29 @@ int arg_control(int argc, char **argv)
     return 1;
 }
 
-int ft_atoi(char *str) //eksiklikleri var başta kontrol gerekli
+int ft_atoi(char *str)
 {
     int sign = 1;
     long result = 0;
-    while (9<= *str && *str <= 13)
+
+    while (9 <= *str && *str <= 13)
     {
         str++;
     }
-    if (*str == '-'||*str == '+')
+
+    if (*str == '-' || *str == '+')
     {
-        if (*str++ == '-')
+        if (*str == '-')
+        {
             sign = -1;
+        }
+        str++;
     }
     while (*str != '\0')
     {
-        result += (*str++ - '0');
-        result *= 10;
+        result = result * 10 + (*str - '0');
+        str++;
     }
-    return (int)((result/10)*sign);
+
+    return (int)(result * sign);
 }

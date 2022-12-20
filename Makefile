@@ -1,7 +1,7 @@
 SRCS			= philo.c utils.c
 RM				= rm -f
 GCC			= gcc -Wall -Wextra -Werror
-NAME			= philosophers
+NAME			= philo
 all:			$(SRCS) $(NAME)
 
 $(NAME): $(SRCS)
