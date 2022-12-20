@@ -1,5 +1,12 @@
 #include "philo.h"
 
+void *thread_function(void *philo_addres)
+{
+    t_philo *philo = (t_philo *)philo_addres;
+    printf("%i",philo->n);
+    return philo;
+}
+
 void fill_each_philo_data(t_philo *all_philo,int number_of_philo)
 {
     int const_num = number_of_philo;
@@ -26,12 +33,13 @@ void fill_each_philo_data(t_philo *all_philo,int number_of_philo)
     
 }
 
-void create_philo_malloc(t_data *const_data)
+t_philo *create_philo_malloc(t_data const_data)
 {
     t_philo *all_philo;
     all_philo = (t_philo *)malloc(sizeof(t_philo)* \
-    const_data->total_number_of_philo);
+    const_data.total_number_of_philo);
     if (all_philo == NULL)
         exit(1);
-    fill_each_philo_data(all_philo,const_data->total_number_of_philo);
+    fill_each_philo_data(all_philo,const_data.total_number_of_philo);
+    return all_philo;
 }

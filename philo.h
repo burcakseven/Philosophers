@@ -14,7 +14,7 @@ typedef struct	s_philo
     int is_alive;
     int fork_left;
     int for_right;
-
+    pthread_t thread;
 }		t_philo;
 
 typedef struct	s_data
@@ -35,7 +35,10 @@ int ft_atoi(char *str);
 int arg_control(int argc,char **argv);
 
 //philo_funcs.c
-void create_philo_malloc(t_data *const_data);
+t_philo *create_philo_malloc(t_data const_data);
 void fill_each_philo_data(t_philo *all_philo,int number_of_philo);
+void *thread_function(void *philo_addres);
+
+void start_threads(t_philo *philo_address,t_data const_data);
 
 #endif
