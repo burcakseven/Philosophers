@@ -15,4 +15,5 @@ int main(int argc, char **argv)
 
     arg_control(argc, argv);
     fill_data_const(&const_data,argv+1);
+    create_philo_malloc(&const_data);
 }

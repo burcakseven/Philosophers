@@ -1,4 +1,4 @@
-SRCS			= philo.c utils.c
+SRCS			= philo.c utils.c philo_funcs.c
 RM				= rm -f
 GCC			= gcc -Wall -Wextra -Werror
 NAME			= philo

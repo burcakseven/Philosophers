@@ -26,9 +26,16 @@ typedef struct	s_data
     
 }		t_data;
 
+//philo.c
+void fill_data_const(t_data *const_data, char **data);
+
+//utils.c
 int ft_strlen(char *str);
 int ft_atoi(char *str);
 int arg_control(int argc,char **argv);
-void fill_data_const(t_data *const_data, char **data);
+
+//philo_funcs.c
+void create_philo_malloc(t_data *const_data);
+void fill_each_philo_data(t_philo *all_philo,int number_of_philo);
 
 #endif
