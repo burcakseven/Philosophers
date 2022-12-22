@@ -7,16 +7,6 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-
-typedef struct	s_philo
-{
-    int n;
-    int is_alive;
-    int fork_left;
-    int for_right;
-    pthread_t thread;
-}		t_philo;
-
 typedef struct	s_data
 {
     int total_number_of_philo;
@@ -25,6 +15,17 @@ typedef struct	s_data
     int time_to_sleep;
     
 }		t_data;
+
+typedef struct	s_philo
+{
+    int n;
+    int is_alive;
+    int fork_left;
+    int for_right;
+    t_data  const_data;
+    pthread_t thread;
+    pthread_mutex_t *mutex;
+}		t_philo;
 
 //philo.c
 void fill_data_const(t_data *const_data, char **data);
