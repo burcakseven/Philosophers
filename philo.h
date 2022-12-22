@@ -43,4 +43,5 @@ void *thread_function(void *philo_addres);
 void start_threads(t_philo *philo_address,t_data const_data);
 void catch_threads(t_philo *philo_address,int total_number_of_philo);
 
+
 #endif

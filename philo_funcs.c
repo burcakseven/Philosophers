@@ -19,7 +19,6 @@ void *thread_function(void *philo_addres)
     pthread_mutex_t *mutex =\
      malloc(sizeof(mutex)*philo->const_data.total_number_of_philo);
     int i = 1;
-    // printf("\n------%i------\n",philo->n);
     while (i--)
     {
         if (philo->n %2 == 1)
@@ -28,7 +27,6 @@ void *thread_function(void *philo_addres)
         }
         else
         {
-            // printf("\n----%i----\n",philo->const_data->time_to_eat);
             philo_behaviour(&mutex[philo->for_right],&mutex[philo->fork_left],philo);
         }
     }
