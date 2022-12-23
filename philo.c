@@ -22,7 +22,7 @@ void start_threads(t_philo *philo_address,t_data const_data)
         if (ret != 0) {
         exit(1);
         }
-    usleep(1000);
+    usleep(60);
     i++;
     }
 }

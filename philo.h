@@ -19,7 +19,7 @@ typedef struct	s_data
 typedef struct	s_philo
 {
     int n;
-    int is_alive;
+    int *is_alive;
     int fork_left;
     int for_right;
     t_data  const_data;
@@ -39,12 +39,18 @@ int arg_control(int argc,char **argv);
 t_philo *create_philo_malloc(t_data const_data);
 void fill_each_philo_data(t_philo *all_philo,int number_of_philo);
 void *thread_function(void *philo_addres);
+void philo_behaviour_odd(pthread_mutex_t *mutex_1,pthread_mutex_t *mutex_2,\
+t_philo *philo);
+void philo_behaviour_even(pthread_mutex_t *mutex_1,pthread_mutex_t *mutex_2,\
+t_philo *philo);
 
 void start_threads(t_philo *philo_address,t_data const_data);
 void catch_threads(t_philo *philo_address,int total_number_of_philo);
 
 //behaviour_utils.c
-int philo_eats(pthread_mutex_t *mutex_1,pthread_mutex_t *mutex_2,\
+long philo_eats(pthread_mutex_t *mutex_1,pthread_mutex_t *mutex_2,\
 t_philo *philo,struct timeval *tv);
 void philo_sleeps(t_philo *philo);
+void is_dead(long initial, long now, t_philo *philo);
+
 #endif
