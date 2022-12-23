@@ -4,8 +4,8 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <unistd.h>
-#include "stdio.h"
-#include "stdlib.h"
+#include <sys/time.h>
+#include <stdlib.h>
 
 typedef struct	s_data
 {
@@ -43,5 +43,8 @@ void *thread_function(void *philo_addres);
 void start_threads(t_philo *philo_address,t_data const_data);
 void catch_threads(t_philo *philo_address,int total_number_of_philo);
 
-
+//behaviour_utils.c
+int philo_eats(pthread_mutex_t *mutex_1,pthread_mutex_t *mutex_2,\
+t_philo *philo,struct timeval *tv);
+void philo_sleeps(t_philo *philo);
 #endif

@@ -3,14 +3,36 @@
 void philo_behaviour(pthread_mutex_t *mutex_1,pthread_mutex_t *mutex_2,\
 t_philo *philo)
 {
-    pthread_mutex_lock(mutex_1);
-    printf("p:%i ,fork : %i \n",philo->n,philo->fork_left);
-    pthread_mutex_lock(mutex_2);
-    printf("p:%i ,fork : %i \n",philo->n,philo->for_right);
-    printf("eat:%i \n",philo->n);
+    struct timeval tv;
+    // static second_difference;
+    // static usecond_difference;
+    gettimeofday(&tv,NULL);
+    printf("p:%i SEC: %li\n",philo->n,tv.tv_sec);
+    printf("%i USEC: %i\n",philo->n,tv.tv_usec);
+    //eat
+    philo_eats(mutex_1,mutex_2,philo,&tv);
+    gettimeofday(&tv,NULL);
+    printf("p:%i SEC: %li\n",philo->n,tv.tv_sec);
+    printf("%i USEC: %i\n",philo->n,tv.tv_usec);
+    //sleep
+    philo_sleeps(philo);
+    gettimeofday(&tv,NULL);
+    printf("p:%i SEC: %li\n",philo->n,tv.tv_sec);
+    printf("%i USEC: %i\n",philo->n,tv.tv_usec);
+    //think
+
+    // pthread_mutex_lock(mutex_1);
+    // printf("p:%i ,fork : %i \n",philo->n,philo->fork_left);
+    // pthread_mutex_lock(mutex_2);
+    // printf("%li SEC:\n",tv.tv_sec);
+    // printf("%i USEC:\n",tv.tv_usec);
+    // printf("p:%i ,fork : %i \n",philo->n,philo->for_right);
+    // printf("eat:%i \n",philo->n);
     
-    pthread_mutex_unlock(mutex_1);
-    pthread_mutex_unlock(mutex_2);
+    // pthread_mutex_unlock(mutex_1);
+    // pthread_mutex_unlock(mutex_2);
+    // printf("%li SEC2:\n",tv.tv_sec);
+    // printf("%i USEC2:\n",tv.tv_usec);
 }
 
 void *thread_function(void *philo_addres)
@@ -27,6 +49,7 @@ void *thread_function(void *philo_addres)
         }
         else
         {
+            sleep(1);
             philo_behaviour(&mutex[philo->for_right],&mutex[philo->fork_left],philo);
         }
     }
