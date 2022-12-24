@@ -25,6 +25,7 @@ typedef struct	s_philo
     t_data  const_data;
     pthread_t thread;
     pthread_mutex_t *mutex;
+    long last_eat;
 }		t_philo;
 
 //philo.c
@@ -34,6 +35,7 @@ void fill_data_const(t_data *const_data, char **data);
 int ft_strlen(char *str);
 int ft_atoi(char *str);
 int arg_control(int argc,char **argv);
+long to_usec(void);
 
 //philo_funcs.c
 t_philo *create_philo_malloc(t_data const_data);
@@ -49,7 +51,7 @@ void catch_threads(t_philo *philo_address,int total_number_of_philo);
 
 //behaviour_utils.c
 long philo_eats(pthread_mutex_t *mutex_1,pthread_mutex_t *mutex_2,\
-t_philo *philo,struct timeval *tv);
+t_philo *philo);
 void philo_sleeps(t_philo *philo);
 void is_dead(long initial, long now, t_philo *philo);
 
