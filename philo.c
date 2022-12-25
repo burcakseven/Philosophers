@@ -11,18 +11,23 @@ void fill_data_const(t_data *const_data, char **data)
 
 void start_threads(t_philo *philo_address,t_data const_data)
 {
-    int i = 0;
+    int i = -1;
     philo_address->mutex = malloc(sizeof(pthread_mutex_t)\
         *(const_data.total_number_of_philo+1));
-
+    while (i < const_data.total_number_of_philo)
+    {
+        pthread_mutex_init(&(philo_address->mutex[i+1]), NULL);
+        i++;
+    }
+    i = 0;
     while (i < const_data.total_number_of_philo)
     {
         philo_address[i].mutex = philo_address->mutex;
-        pthread_mutex_init(philo_address->mutex+i, NULL);
         philo_address[i].const_data = const_data;
         philo_address[i].last_eat = to_usec();
+        usleep(100);
         pthread_create(&philo_address[i].thread, NULL, &thread_function, &philo_address[i]);//fonksiyon oluşturulacak
-    i ++;
+    i++;
     }
 }
 

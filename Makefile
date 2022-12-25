@@ -12,13 +12,6 @@ $(NAME): $(SRCS)
 	@reset
 	$(GCC) $(SRCS) -o $(NAME)
 
-data_race: $(SRCS)
-	@$(GCC) $(FLAGS_DATARACE) $(SRCS) -o philo_thread
-
-
-memory_check: $(SRCS)
-	@$(GCC) $(FLAGS_MEMORY) $(SRCS) -o philo_memory
-	
 clean:
 	$(RM) $(NAME)
 

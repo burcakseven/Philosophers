@@ -19,6 +19,7 @@ typedef struct	s_data
 typedef struct	s_philo
 {
     int n;
+    pthread_t for_live;
     int *is_alive;
     int fork_left;
     int for_right;
@@ -53,6 +54,6 @@ void catch_threads(t_philo *philo_address,int total_number_of_philo);
 long philo_eats(pthread_mutex_t *mutex_1,pthread_mutex_t *mutex_2,\
 t_philo *philo);
 void philo_sleeps(t_philo *philo);
-void is_dead(long initial, long now, t_philo *philo);
+void *is_dead(void *philo);
 
 #endif

@@ -4,31 +4,21 @@ void philo_behaviour_odd(pthread_mutex_t *mutex_1,pthread_mutex_t *mutex_2,\
 t_philo *philo)
 {
     //eat
-    philo->last_eat = philo_eats(mutex_1,mutex_2,philo);
-    is_dead(philo->last_eat,to_usec(),philo);
+    if(philo->is_alive){
+    philo->last_eat = philo_eats(mutex_1,mutex_2,philo);}
     //sleep
-    philo_sleeps(philo);
-    is_dead(philo->last_eat,to_usec(),philo);
-}
-void philo_behaviour_even(pthread_mutex_t *mutex_1,pthread_mutex_t *mutex_2,\
-t_philo *philo)
-{
-    //eat
-    philo->last_eat = philo_eats(mutex_2,mutex_1,philo);
-    is_dead(philo->last_eat,to_usec(),philo);
-    //sleep
-    philo_sleeps(philo);
-    is_dead(philo->last_eat,to_usec(),philo);
+    if(philo->is_alive){
+    philo_sleeps(philo);}
+    // is_dead(philo->last_eat,to_usec(),philo);
 }
 
 void *thread_function(void *philo_addres)
 {
     t_philo *philo =(t_philo *)philo_addres;
-    int i = 2;
-    while (i--)
+    pthread_create(&philo->for_live, NULL, &is_dead,philo);//yaşıyor mu kontrol
+    // int i = 1;
+    while (*philo->is_alive)
     {
-        // printf("\np:%i|||||%i|||%p||||||||\n\n",philo->n,philo->for_right,&philo->mutex[philo->for_right]);
-        // printf("\np:%i|||||%i|||%p||||||||\n\n",philo->n,philo->fork_left,&philo->mutex[philo->fork_left]);
         if (philo->n%2 == 1)
         {
             philo_behaviour_odd(&philo->mutex[philo->fork_left],&philo->mutex[philo->for_right],philo);
@@ -63,7 +53,8 @@ void fill_each_philo_data(t_philo *all_philo,int number_of_philo)
         all_philo[number_of_philo].fork_left =\
         (all_philo[number_of_philo].for_right+1) % const_num;
         }
-        all_philo[number_of_philo].is_alive = &is_alive;
+        all_philo[number_of_philo].is_alive =  &is_alive;
+
     }
     
 }
