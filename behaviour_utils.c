@@ -58,26 +58,12 @@ void philo_thinks(t_philo *philo,long initial)
 void *is_dead(void *philo_adress)
 {
 	t_philo *philo =(t_philo *)philo_adress;
-	// int i = philo->const_data.total_number_of_philo;
-	// while (philo->is_alive[philo->n])
-	// {
-	// 	pthread_mutex_lock(&philo->mutex[0]);
-	while (1)
-	{
 	
-	usleep(30);
-		if(to_usec()-philo->last_eat >= philo->const_data.time_to_die)
-		{
-			// while (i)
-			// {
-				printf("died");
-				pthread_detach(philo->thread);
-			}
-		// 	printf("%i died",philo->n);
-		// 	i = 0;
-		// }
-		// pthread_mutex_unlock(&philo->mutex[0]);
-	// }
+	while (to_usec()-philo->last_eat < philo->const_data.time_to_die)
+	{
+
 	}
+	printf("%i is died",philo->n);
+	pthread_detach(philo->thread);
 	return philo;
 }
