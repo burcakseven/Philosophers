@@ -42,18 +42,19 @@ long to_usec(void);
 t_philo *create_philo_malloc(t_data const_data);
 void fill_each_philo_data(t_philo *all_philo,int number_of_philo);
 void *thread_function(void *philo_addres);
-void philo_behaviour_odd(pthread_mutex_t *mutex_1,pthread_mutex_t *mutex_2,\
-t_philo *philo);
-void philo_behaviour_even(pthread_mutex_t *mutex_1,pthread_mutex_t *mutex_2,\
+void philo_behaviour(pthread_mutex_t *mutex_1,pthread_mutex_t *mutex_2,\
 t_philo *philo);
 
 void start_threads(t_philo *philo_address,t_data const_data);
 void catch_threads(t_philo *philo_address,int total_number_of_philo);
 
 //behaviour_utils.c
-long philo_eats(pthread_mutex_t *mutex_1,pthread_mutex_t *mutex_2,\
+void philo_eats_odd(pthread_mutex_t *mutex_1,pthread_mutex_t *mutex_2,\
+t_philo *philo);
+void philo_eats_even(pthread_mutex_t *mutex_2,pthread_mutex_t *mutex_1,\
 t_philo *philo);
 void philo_sleeps(t_philo *philo);
 void *is_dead(void *philo);
+void philo_thinks(t_philo *philo,long initial);
 
 #endif
