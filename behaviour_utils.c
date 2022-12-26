@@ -10,6 +10,7 @@ t_philo *philo)
 	pthread_mutex_lock(mutex_2);
 	printf("p:%i taken fork:%i\n",philo->n,philo->for_right);
 	philo->last_eat = to_usec();
+	printf("last %li\n",philo->last_eat);
 	usleep(philo->const_data.time_to_eat);
 	printf("eat: %i \n",philo->n);
 
@@ -57,22 +58,26 @@ void philo_thinks(t_philo *philo,long initial)
 void *is_dead(void *philo_adress)
 {
 	t_philo *philo =(t_philo *)philo_adress;
-	int i = philo->const_data.total_number_of_philo;
-	while (philo->is_alive[philo->n])
+	// int i = philo->const_data.total_number_of_philo;
+	// while (philo->is_alive[philo->n])
+	// {
+	// 	pthread_mutex_lock(&philo->mutex[0]);
+	while (1)
 	{
-		printf("MEHRABA");
-		pthread_mutex_lock(&philo->mutex[0]);
-		if(to_usec()-philo->last_eat >= philo->const_data.time_to_die &&philo->is_alive[philo->n] != 0)
+	
+	usleep(30);
+		if(to_usec()-philo->last_eat >= philo->const_data.time_to_die)
 		{
-			while (i)
-			{
-				philo->is_alive[i] = 0;
-				i--;
+			// while (i)
+			// {
+				printf("died");
+				pthread_detach(philo->thread);
 			}
-			printf("%i died",philo->n);
-			i = 0;
-		}
-		pthread_mutex_unlock(&philo->mutex[0]);
+		// 	printf("%i died",philo->n);
+		// 	i = 0;
+		// }
+		// pthread_mutex_unlock(&philo->mutex[0]);
+	// }
 	}
 	return philo;
 }

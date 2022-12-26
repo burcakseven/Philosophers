@@ -14,8 +14,8 @@ t_philo *philo)
     // }
     //sleep
     // if(philo->is_alive){
-   /* philo_sleeps(philo);
-    philo_thinks(philo,initial); */
+    philo_sleeps(philo);
+    // philo_thinks(philo,initial);
     // }
     // is_dead(philo->last_eat,to_usec(),philo);
 }
@@ -23,8 +23,7 @@ t_philo *philo)
 void *thread_function(void *philo_addres)
 {
     t_philo *philo =(t_philo *)philo_addres;
-    int i = 1;
-    while (i)
+    while (1)
     {
             philo_behaviour(&philo->mutex[philo->fork_left],&philo->mutex[philo->for_right],philo);
     }
@@ -54,6 +53,11 @@ void fill_each_philo_data(t_philo *all_philo,int number_of_philo)
         }
         all_philo[philo_n].is_alive = all_philo[1].is_alive;
         all_philo[philo_n].is_alive[philo_n]= 1;
+    }
+    philo_n = number_of_philo+1;
+    while (1<philo_n--)
+    {
+        printf("%p | p:%i |%p \n",all_philo[philo_n].is_alive,philo_n,&all_philo[philo_n].is_alive[philo_n]);
     }
     
 }

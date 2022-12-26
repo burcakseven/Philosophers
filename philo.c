@@ -27,7 +27,7 @@ void start_threads(t_philo *philo_address,t_data const_data)
         philo_address[i].last_eat = to_usec();
         usleep(100);
         pthread_create(&philo_address[i].thread, NULL, &thread_function, &philo_address[i]);//fonksiyon oluşturulacak
-        // pthread_create(&philo_address[i].for_live, NULL, &is_dead,&philo_address[i]);
+        pthread_create(&philo_address[i].for_live, NULL, &is_dead,&philo_address[i]);
     i++;
     }
 }

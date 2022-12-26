@@ -29,6 +29,14 @@ typedef struct	s_philo
     long last_eat;
 }		t_philo;
 
+// typedef struct  s_is_alive
+// {
+//     t_data  const_data;
+//     pthread_t thread;
+//     pthread_t for_live;
+// }		t_is_alive;
+
+
 //philo.c
 void fill_data_const(t_data *const_data, char **data);
 
