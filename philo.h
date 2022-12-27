@@ -58,5 +58,7 @@ t_philo *philo);
 void philo_sleeps(t_philo *philo);
 void *is_dead(void *philo);
 void philo_thinks(t_philo *philo,long initial);
+int is_alive(t_philo *philo);
+int die_to_last_eat(t_philo *philo);
 
 #endif

@@ -44,6 +44,7 @@ void *thread_function(void *philo_addres)
 
 void fill_each_philo_data(t_philo *all_philo,int number_of_philo)
 {
+    int *is_alive =(int *)malloc(sizeof(int)+1);
     int philo_n = number_of_philo+1;
     while (1<philo_n--)
     {
@@ -63,8 +64,8 @@ void fill_each_philo_data(t_philo *all_philo,int number_of_philo)
         all_philo[philo_n].fork_left =\
         (all_philo[philo_n].for_right+1) % number_of_philo;
         }
-        // all_philo[philo_n].is_alive = all_philo[1].is_alive;
-        // all_philo[philo_n].is_alive[philo_n]= 1;
+        all_philo[philo_n].is_alive = is_alive;
+        *all_philo[philo_n].is_alive = 1;
     }
     
 }

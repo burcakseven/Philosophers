@@ -55,15 +55,48 @@ void philo_thinks(t_philo *philo,long initial)
 	usleep(try);
 }
 
+int is_alive(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->mutex[0]);
+	if (*(philo->is_alive) == 0)
+		{
+		pthread_detach(philo->thread);
+		pthread_mutex_unlock(&philo->mutex[0]);
+		return 0;
+		}
+	pthread_mutex_unlock(&philo->mutex[0]);
+	return 1;
+}
+
+int die_to_last_eat(t_philo *philo)
+{
+	int last = philo->const_data.total_number_of_philo+1;
+	pthread_mutex_lock(&philo->mutex[last]);
+	if((to_usec()-philo->last_eat) < philo->const_data.time_to_die)
+	{
+		pthread_mutex_unlock(&philo->mutex[last]);
+		return 1;
+	}
+	pthread_mutex_unlock(&philo->mutex[last]);
+	return 0;
+}
+
 void *is_dead(void *philo_adress)
 {
 	t_philo *philo =(t_philo *)philo_adress;
-	
-	while (to_usec()-philo->last_eat < philo->const_data.time_to_die)
+	while (die_to_last_eat(philo))
 	{
-
+		usleep(100);
+		if (is_alive(philo) == 0)
+			return NULL;
 	}
-	printf("%i is died",philo->n);
+	// pthread_mutex_lock(&philo->mutex[0]);
+	if (is_alive(philo) == 0)
+		return NULL;
+	usleep(100);
+	*philo->is_alive = 0;
+	printf("!!!!!!%i died\n",philo->n);
 	pthread_detach(philo->thread);
+	// pthread_mutex_unlock(&philo->mutex[0]);
 	return philo;
 }
