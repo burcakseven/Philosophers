@@ -2,6 +2,9 @@
 
 void is_alive(t_data const_data, t_philo *philo)
 {
+	int eat_time;
+	static int control = 0;
+	eat_time = philo->eat_time[const_data.philo_n];
 	if(const_data.time_to_die < to_usec()-philo->last_eat[const_data.philo_n])
 	{
 		sem_wait(philo->sem_is_alive);
@@ -10,11 +13,17 @@ void is_alive(t_data const_data, t_philo *philo)
 		print_sem(const_data,philo,4);
 		exit(1);
 	}
-	if (const_data.argc == 6 && philo.eat_time == const_data.optional)
+	if (const_data.argc == 6 && eat_time == \
+	const_data.optional && control == 0)
 	{
-		exit(1);
+		sem_wait(philo->sem_is_alive);
+		philo->eat_time[0] ++;
+		printf("EATTİME %p | %i philo %i \n",&philo->eat_time[0],philo->eat_time[0],const_data.philo_n);
+		control++;
+		if(philo->eat_time[0] == const_data.total_number_of_philo)
+			exit(1);
+		sem_post(philo->sem_is_alive);
 	}
-	
 }
 
 int time_divide_five(int time)

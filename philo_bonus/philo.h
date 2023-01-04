@@ -18,7 +18,6 @@ typedef struct	s_data
     int optional;
     int argc;
     int philo_n;
-    int eat_time;
 }		t_data;
 
 typedef struct	s_philo
@@ -35,6 +34,7 @@ typedef struct	s_philo
     long initial;
     pthread_t thread_catch;
     t_data const_data;
+    int *eat_time;
 }		t_philo;
 
 //forks.c

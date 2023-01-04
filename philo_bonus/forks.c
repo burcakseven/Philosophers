@@ -19,14 +19,21 @@ void	fork_function(sem_t *right, sem_t *left, t_data const_data, t_philo *philo)
 	// exit(5);
 }
 
+void create_malloc(int total_philo,t_philo *philo)
+{
+	philo->last_eat = (long *)malloc(sizeof(long)*total_philo);
+	philo->pid = malloc(sizeof(pid_t)*total_philo);
+	philo->eat_time = malloc(sizeof(int)*total_philo+1);
+	philo->eat_time[0]= 0;
+}
+
 void start_forks(t_data const_data,t_philo *philo)
 {
     int nphilo;
 	
 	philo->is_alive = 1;
 	philo->initial = to_usec();
-	philo->last_eat = (long *)malloc(sizeof(long)*const_data.total_number_of_philo);
-	philo->pid = malloc(sizeof(pid_t)*const_data.total_number_of_philo);
+	create_malloc(const_data.total_number_of_philo,philo);
 	nphilo = 0;
     op_sem(const_data, philo);
 
@@ -35,8 +42,8 @@ void start_forks(t_data const_data,t_philo *philo)
 		int res= fork();
         if (res == 0)
 		{
-			const_data.eat_time = 0;
 			const_data.philo_n = nphilo;
+			philo->eat_time[nphilo]= 0;
 			philo->last_eat[const_data.philo_n] = to_usec();
             fork_function(philo->right,philo->left,const_data,philo);
 			exit(5);
