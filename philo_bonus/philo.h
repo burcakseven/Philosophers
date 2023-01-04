@@ -18,7 +18,7 @@ typedef struct	s_data
     int optional;
     int argc;
     int philo_n;
-    
+    int eat_time;
 }		t_data;
 
 typedef struct	s_philo

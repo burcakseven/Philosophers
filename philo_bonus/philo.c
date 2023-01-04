@@ -10,6 +10,11 @@ void is_alive(t_data const_data, t_philo *philo)
 		print_sem(const_data,philo,4);
 		exit(1);
 	}
+	if (const_data.argc == 6 && philo.eat_time == const_data.optional)
+	{
+		exit(1);
+	}
+	
 }
 
 int time_divide_five(int time)

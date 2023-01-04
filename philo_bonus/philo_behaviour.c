@@ -8,6 +8,7 @@ if(sem_wait(left)== 0){
 		print_sem(const_data,philo,0);
 		print_sem(const_data,philo,1);
 		philo->last_eat[const_data.philo_n] = to_usec();
+		const_data.eat_time++;
 		divide_usleep(const_data,philo,const_data.time_to_eat);
 		sem_post(right);}
 		sem_post(left);

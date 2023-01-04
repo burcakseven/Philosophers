@@ -35,12 +35,12 @@ void start_forks(t_data const_data,t_philo *philo)
 		int res= fork();
         if (res == 0)
 		{
+			const_data.eat_time = 0;
 			const_data.philo_n = nphilo;
 			philo->last_eat[const_data.philo_n] = to_usec();
             fork_function(philo->right,philo->left,const_data,philo);
 			exit(5);
 		}
 		philo->pid[const_data.total_number_of_philo - nphilo] = res;
-
 	}
 }
