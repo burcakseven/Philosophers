@@ -8,7 +8,7 @@ if(sem_wait(left)== 0){
 		print_sem(const_data,philo,0);
 		print_sem(const_data,philo,1);
 		philo->last_eat[const_data.philo_n] = to_usec();
-		usleep(const_data.time_to_eat);
+		divide_usleep(const_data,philo,const_data.time_to_eat);
 		sem_post(right);}
 		sem_post(left);
 }
@@ -16,12 +16,23 @@ if(sem_wait(left)== 0){
 
 void philo_sleeps(t_data const_data,t_philo *philo)
 {
+	int difference;
+	int l_dif_n;
+
+	l_dif_n = (int)(to_usec() - philo->last_eat[const_data.philo_n]);
+	difference = const_data.time_to_eat-const_data.time_to_sleep;
 	print_sem(const_data,philo,2);
+	if (const_data.time_to_die < l_dif_n +const_data.time_to_sleep)
+	{
+		usleep(const_data.time_to_die -l_dif_n);
+		is_alive(const_data,philo);
+	}
 	usleep(const_data.time_to_sleep);
 	if (const_data.time_to_sleep < const_data.time_to_eat)
 	{
 		print_sem(const_data,philo,3);
-		usleep(const_data.time_to_eat-const_data.time_to_sleep);
+		usleep(difference);
+		is_alive(const_data,philo);
 	}
 	
 }

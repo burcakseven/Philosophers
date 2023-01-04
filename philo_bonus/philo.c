@@ -12,6 +12,29 @@ void is_alive(t_data const_data, t_philo *philo)
 	}
 }
 
+int time_divide_five(int time)
+{
+	int count;
+	count = time/5;
+	return count;
+}
+
+void divide_usleep(t_data const_data, t_philo *philo, int time)
+{
+	int count = time_divide_five(time);
+	while (count--)
+	{
+		is_alive(const_data,philo);
+		usleep(5);
+	}
+	if (time%5 != 0)
+	{
+		is_alive(const_data,philo);
+		usleep(time%5);
+	}
+	is_alive(const_data,philo);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	const_data;
@@ -24,7 +47,7 @@ int	main(int argc, char **argv)
         start_forks(const_data, &philo);
 	}
 	nphilo = 0;
-	wait(NULL);
+	waitpid(-1, NULL, 0);
 	while (const_data.total_number_of_philo>=nphilo)
 	{
 		kill(philo.pid[nphilo++], SIGINT);
