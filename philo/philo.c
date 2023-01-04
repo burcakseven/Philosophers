@@ -73,4 +73,4 @@ int	main(int argc, char **argv)
 		catch_threads(philo_address, const_data.total_number_of_philo);
 		malloc_to_free(philo_address);
 	}
-}6
+}
