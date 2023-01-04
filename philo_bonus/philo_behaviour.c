@@ -28,7 +28,9 @@ void philo_sleeps(t_data const_data,t_philo *philo)
 
 void philo_behaviour(sem_t *right,sem_t *left, t_data const_data, t_philo *philo)
 {
+	is_alive(const_data,philo);
 	philo_eats_even(right,left,const_data,philo);
+	is_alive(const_data,philo);
 	philo_sleeps(const_data,philo);
 
 }

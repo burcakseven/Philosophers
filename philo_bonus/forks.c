@@ -35,8 +35,6 @@ void start_forks(t_data const_data,t_philo *philo)
 		int res= fork();
         if (res == 0)
 		{
-			pthread_create(&philo->thread_catch[nphilo], NULL, \
-			&is_alive, philo);
 			const_data.philo_n = nphilo;
 			philo->last_eat[const_data.philo_n] = to_usec();
             fork_function(philo->right,philo->left,const_data,philo);

@@ -33,7 +33,7 @@ typedef struct	s_philo
     int is_alive;
     long *last_eat;
     long initial;
-    pthread_t *thread_catch;
+    pthread_t thread_catch;
     t_data const_data;
 }		t_philo;
 
@@ -48,7 +48,7 @@ void philo_sleeps(t_data const_data,t_philo *philo);
 void philo_behaviour(sem_t *right,sem_t *left, t_data const_data, t_philo *philo);
 
 //philo.c
-void *is_alive(void *phi);
+void is_alive(t_data const_data, t_philo *philo);
 
 // sem_func.c
 void op_sem(t_data const_data,t_philo *philo);
