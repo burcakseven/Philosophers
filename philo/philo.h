@@ -13,6 +13,8 @@ typedef struct	s_data
     int time_to_die;
     int time_to_eat;
     int time_to_sleep;
+    int optional;
+    int argc;
     
 }		t_data;
 
@@ -26,12 +28,14 @@ typedef struct	s_philo
     pthread_t thread;
     pthread_mutex_t *mutex;
     long last_eat;
+    long initial;
     int *is_alive;
+    int eat_time;
 }		t_philo;
 
 
 //philo.c
-void fill_data_const(t_data *const_data, char **data);
+void fill_data_const(t_data *const_data, char **data, int argc);
 
 //utils.c
 int ft_strlen(char *str);
@@ -46,6 +50,8 @@ void fill_each_philo_data(t_philo *all_philo,int number_of_philo);
 void *thread_function(void *philo_addres);
 void philo_behaviour(pthread_mutex_t *mutex_1,pthread_mutex_t *mutex_2,\
 t_philo *philo);
+void	fill_each_philo_two(t_philo *all_philo, \
+int philo_n, int number_of_philo);
 
 void start_threads(t_philo *philo_address,t_data const_data);
 void catch_threads(t_philo *philo_address,int total_number_of_philo);
@@ -57,7 +63,7 @@ void philo_eats_even(pthread_mutex_t *mutex_2,pthread_mutex_t *mutex_1,\
 t_philo *philo);
 void philo_sleeps(t_philo *philo);
 void *is_dead(void *philo);
-void philo_thinks(t_philo *philo,long initial);
+void philo_thinks(t_philo *philo);
 int is_alive(t_philo *philo);
 int die_to_last_eat(t_philo *philo);
 
