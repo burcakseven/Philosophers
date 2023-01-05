@@ -3,9 +3,8 @@
 void is_alive(t_data const_data, t_philo *philo)
 {
 	int eat_time;
-	static int control = 0;
 	eat_time = philo->eat_time[const_data.philo_n];
-	if(const_data.time_to_die < to_usec()-philo->last_eat[const_data.philo_n])
+	if(const_data.time_to_die <= to_usec()-philo->last_eat[const_data.philo_n])
 	{
 		sem_wait(philo->sem_is_alive);
 		philo->is_alive = 0;
@@ -13,57 +12,70 @@ void is_alive(t_data const_data, t_philo *philo)
 		print_sem(const_data,philo,4);
 		exit(1);
 	}
-	if (const_data.argc == 6 && eat_time == \
-	const_data.optional && control == 0)
+	if (const_data.argc == 6 && eat_time == const_data.optional)
 	{
-		sem_wait(philo->sem_is_alive);
-		philo->eat_time[0] ++;
-		printf("EATTİME %p | %i philo %i \n",&philo->eat_time[0],philo->eat_time[0],const_data.philo_n);
-		control++;
-		if(philo->eat_time[0] == const_data.total_number_of_philo)
-			exit(1);
-		sem_post(philo->sem_is_alive);
+		exit(1);
 	}
 }
 
-int time_divide_five(int time)
+void divide_usleep(t_data const_data, t_philo *philo, int time,int flag)
 {
-	int count;
-	count = time/5;
-	return count;
+	long	start;
+	int eat_time;
+
+	eat_time = philo->eat_time[const_data.philo_n];
+	if(flag == 1 && const_data.argc == 6 && eat_time == const_data.optional )
+	{
+		usleep(const_data.time_to_eat);
+		sem_post(philo->left);
+		sem_post(philo->right);
+	}
+	start = to_usec();
+	while (1)
+	{
+		is_alive(const_data, philo);
+		if (to_usec() - start >= time)
+			break ;
+		usleep(100);
+	}
+	is_alive(const_data, philo);
 }
 
-void divide_usleep(t_data const_data, t_philo *philo, int time)
+void wait_and_kill(t_data const_data, t_philo philo)
 {
-	int count = time_divide_five(time);
-	while (count--)
+	int nphilo;
+	nphilo = 0;
+	if(const_data.argc == 5)
 	{
-		is_alive(const_data,philo);
-		usleep(5);
+		waitpid(-1, NULL, 0);
+		while (const_data.total_number_of_philo>=nphilo)
+		{
+			kill(philo.pid[nphilo++], SIGINT);
+		}
 	}
-	if (time%5 != 0)
+	else if(const_data.argc == 6)
 	{
-		is_alive(const_data,philo);
-		usleep(time%5);
+		while(nphilo++ < const_data.total_number_of_philo)
+		{
+			waitpid(philo.pid[nphilo],NULL,0);
+		}
+		nphilo = 0;
+		while (const_data.total_number_of_philo>=nphilo)
+			kill(philo.pid[nphilo++], SIGINT);
+	
 	}
-	is_alive(const_data,philo);
 }
 
 int	main(int argc, char **argv)
 {
 	t_data	const_data;
     t_philo philo;
-	int nphilo;
 
 	if (arg_control(argc, argv) == 1)
 	{
 		fill_data_const(&const_data, argv + 1, argc);
         start_forks(const_data, &philo);
-	}
-	nphilo = 0;
-	waitpid(-1, NULL, 0);
-	while (const_data.total_number_of_philo>=nphilo)
-	{
-		kill(philo.pid[nphilo++], SIGINT);
+		wait_and_kill(const_data, philo);
+		free(&philo);
 	}
 }

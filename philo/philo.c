@@ -1,5 +1,18 @@
 #include "philo.h"
 
+void divide_usleep(int time)
+{
+	long	start;
+
+	start = to_usec();
+	while (1)
+	{
+		if (to_usec() - start >= time)
+			break ;
+		usleep(100);
+	}
+}
+
 void	fill_data_const(t_data *const_data, char **data, int argc)
 {
 	const_data->total_number_of_philo = ft_atoi(data[0]);
@@ -7,7 +20,7 @@ void	fill_data_const(t_data *const_data, char **data, int argc)
 	const_data->time_to_eat = ft_atoi(data[2]) * 1000;
 	const_data->time_to_sleep = ft_atoi(data[3]) * 1000;
 	if (argc == 6)
-	const_data->optional = ft_atoi(data[4]);
+		const_data->optional = ft_atoi(data[4]);
 	const_data->argc = argc;
 }
 
@@ -54,8 +67,6 @@ void	catch_threads(t_philo *philo_address, int total_number_of_philo)
 
 void	malloc_to_free(t_philo *philo_address)
 {
-	free(philo_address->mutex);
-	free(philo_address->is_alive);
 	free(philo_address);
 }
 

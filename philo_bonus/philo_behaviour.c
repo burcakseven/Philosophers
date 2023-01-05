@@ -1,41 +1,35 @@
 #include "philo.h"
 void	philo_eats_even(sem_t *right, sem_t *left, t_data const_data,t_philo *philo)
 {
-if(sem_wait(left)== 0){
-	print_sem(const_data,philo,0);
-
-	if(sem_wait(right)== 0){
+	if(sem_wait(left)== 0)
+	{
 		print_sem(const_data,philo,0);
-		print_sem(const_data,philo,1);
-		philo->last_eat[const_data.philo_n] = to_usec();
-		philo->eat_time[const_data.philo_n]++;
-		divide_usleep(const_data,philo,const_data.time_to_eat);
-		sem_post(right);}
+		is_alive(const_data, philo);
+		if(sem_wait(right)== 0)
+		{
+			print_sem(const_data,philo,0);
+			print_sem(const_data,philo,1);
+			philo->last_eat[const_data.philo_n] = to_usec();
+			philo->eat_time[const_data.philo_n]++;
+			divide_usleep(const_data,philo,const_data.time_to_eat,1);
+			sem_post(right);
+		}
 		sem_post(left);
-}
+	}
 }
 
 void philo_sleeps(t_data const_data,t_philo *philo)
 {
 	int difference;
-	int l_dif_n;
 
-	l_dif_n = (int)(to_usec() - philo->last_eat[const_data.philo_n]);
 	difference = const_data.time_to_eat-const_data.time_to_sleep;
 	print_sem(const_data,philo,2);
-	if (const_data.time_to_die < l_dif_n +const_data.time_to_sleep)
-	{
-		usleep(const_data.time_to_die -l_dif_n);
-		is_alive(const_data,philo);
-	}
-	usleep(const_data.time_to_sleep);
+	divide_usleep(const_data, philo, const_data.time_to_sleep,0);
 	if (const_data.time_to_sleep < const_data.time_to_eat)
 	{
 		print_sem(const_data,philo,3);
-		usleep(difference);
-		is_alive(const_data,philo);
+		divide_usleep(const_data,philo,difference,0);
 	}
-	
 }
 
 void philo_behaviour(sem_t *right,sem_t *left, t_data const_data, t_philo *philo)

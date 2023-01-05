@@ -13,7 +13,7 @@ void	philo_eats_odd(pthread_mutex_t *mutex_1, pthread_mutex_t *mutex_2, \
 	philo->eat_time++;
 	philo->last_eat = to_usec();
 	pthread_mutex_unlock(&philo->mutex[philo->const_data.total_number_of_philo+1]);
-	usleep(philo->const_data.time_to_eat);
+	divide_usleep(philo->const_data.time_to_eat);
 
 	pthread_mutex_unlock(mutex_1);
 	pthread_mutex_unlock(mutex_2);
@@ -33,7 +33,7 @@ t_philo *philo)
 	philo->last_eat = to_usec();
 	pthread_mutex_unlock(&philo->mutex[philo->const_data.total_number_of_philo+1]);
 
-	usleep(philo->const_data.time_to_eat);
+	divide_usleep(philo->const_data.time_to_eat);
 
 	pthread_mutex_unlock(mutex_1);
 	pthread_mutex_unlock(mutex_2);
@@ -42,7 +42,7 @@ t_philo *philo)
 void philo_sleeps(t_philo *philo)
 {
     printf("%li :%i is sleeping...\n",to_usec()/1000-philo->initial,philo->n);
-    usleep(philo->const_data.time_to_sleep);
+	divide_usleep(philo->const_data.time_to_sleep);
 }
 
 void philo_thinks(t_philo *philo)
@@ -97,7 +97,9 @@ void *is_dead(void *philo_adress)
 		{
 		pthread_detach(philo->thread);
 		return NULL;
-}	}
+}	
+	usleep(2000);
+}
 	pthread_mutex_lock(&philo->mutex[0]);
 	if (*(philo->is_alive) == 0)
 		{
@@ -106,6 +108,7 @@ void *is_dead(void *philo_adress)
 		return NULL;
 		}
 	*philo->is_alive = 0;
+	usleep(1000);
 	printf("%i died.\n",philo->n);
 	pthread_detach(philo->thread);
 	pthread_mutex_unlock(&philo->mutex[0]);

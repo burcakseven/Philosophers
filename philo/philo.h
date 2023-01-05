@@ -42,6 +42,7 @@ int ft_strlen(char *str);
 int ft_atoi(char *str);
 int arg_control(int argc,char **argv);
 long to_usec(void);
+void divide_usleep(int time);
 
 //philo_funcs.c
 t_philo *create_philo_malloc(t_data const_data);

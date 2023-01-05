@@ -49,8 +49,7 @@ void philo_behaviour(sem_t *right,sem_t *left, t_data const_data, t_philo *philo
 
 //philo.c
 void is_alive(t_data const_data, t_philo *philo);
-void divide_usleep(t_data const_data, t_philo *philo, int time);
-int time_divide_five(int time);
+void divide_usleep(t_data const_data, t_philo *philo, int time,int flag);
 
 // sem_func.c
 void op_sem(t_data const_data,t_philo *philo);

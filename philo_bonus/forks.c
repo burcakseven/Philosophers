@@ -16,7 +16,7 @@ void	fork_function(sem_t *right, sem_t *left, t_data const_data, t_philo *philo)
 	{
 		philo_behaviour(right,left,const_data,philo);
 	}
-	// exit(5);
+	exit(5);
 }
 
 void create_malloc(int total_philo,t_philo *philo)

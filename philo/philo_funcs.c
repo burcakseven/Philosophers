@@ -45,6 +45,7 @@ int number_of_philo)
 		fill_each_philo_two(all_philo, \
 		philo_n, number_of_philo);
 	}
+
 }
 
 void	fill_each_philo_two(t_philo *all_philo, \
@@ -61,6 +62,11 @@ int philo_n, int number_of_philo)
 		all_philo[philo_n].fork_left = \
 		(all_philo[philo_n].for_right + 1) % number_of_philo;
 	}
+	if (number_of_philo == 1)
+	{
+		all_philo[philo_n].fork_left = all_philo[philo_n].for_right;
+	}
+	
 }
 
 t_philo	*create_philo_malloc(t_data const_data)
