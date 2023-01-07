@@ -67,7 +67,8 @@ int die_to_last_eat(t_philo *philo)
 {
 	int last = philo->const_data.total_number_of_philo+1;
 	pthread_mutex_lock(&philo->mutex[last]);
-	if((to_usec()-philo->last_eat) < philo->const_data.time_to_die)
+
+	if((to_usec()-philo->last_eat)/1000 <= (philo->const_data.time_to_die)/1000)
 	{
 		pthread_mutex_unlock(&philo->mutex[last]);
 		return 1;
