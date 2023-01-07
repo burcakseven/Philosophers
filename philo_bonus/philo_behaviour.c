@@ -4,6 +4,8 @@ void	philo_eats_even(sem_t *right, sem_t *left, t_data const_data,t_philo *philo
 	if(sem_wait(left)== 0)
 	{
 		print_sem(const_data,philo,0);
+		if(const_data.total_number_of_philo == 1)
+			usleep(const_data.time_to_die);
 		is_alive(const_data, philo);
 		if(sem_wait(right)== 0)
 		{

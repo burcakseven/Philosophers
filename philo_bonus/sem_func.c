@@ -19,8 +19,8 @@ void op_sem(t_data const_data,t_philo *philo)
 
 void print_sem(t_data const_data,t_philo *philo, int flag)
 {
-	long time = (to_usec()-philo->initial)/1000;
 	sem_wait(philo->sem_print);
+	long time = (to_usec()-philo->initial)/1000;
 	if(flag == 0)
 		printf("%li : %i has taken fork \n",time,const_data.philo_n);
 	else if(flag == 1)
